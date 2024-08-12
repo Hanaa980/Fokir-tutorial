@@ -365,6 +365,33 @@
 <!----------------------------------------------------->
 
 <script> 
+    let lastScrollTop = 0;
+const navbar = document.getElementById("navbar");
+const navLinks = navbar.querySelectorAll("a");
+
+window.onscroll = function() {
+    const scrollTop = window.pageYOffset;
+
+    // إظهار/إخفاء شريط التنقل بناءً على اتجاه التمرير
+    navbar.classList.toggle("hidden", scrollTop > lastScrollTop);
+
+    // تغيير خلفية شريط التنقل عند التمرير
+    navbar.style.backgroundColor = scrollTop > 0 ? "#fff" : "transparent";
+
+    // تمييز الرابط النشط بناءً على القسم المرئي
+    document.querySelectorAll(".section").forEach((section, i) => {
+        const sectionTop = section.offsetTop - navbar.offsetHeight;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        const isActive = scrollTop >= sectionTop && scrollTop < sectionBottom;
+        navLinks[i].classList.toggle("active", isActive);
+        navLinks[i].classList.toggle("section-active", isActive);
+    });
+
+    lastScrollTop = scrollTop;
+};
+
+
+
     
     const buttons = document.querySelectorAll('.control-button');
     const sections = document.querySelectorAll('.section');
