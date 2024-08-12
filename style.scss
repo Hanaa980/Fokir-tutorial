@@ -99,7 +99,10 @@ body{
 }
 
 .navbar{
-
+display:fixed;
+    width:100%;
+    background: transparent;
+    transition:all .5s ;
     span{
         color: #ff305b;
         font: {
