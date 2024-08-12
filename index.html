@@ -395,8 +395,8 @@ window.onscroll = function() {
 
     // تمييز الرابط النشط في شريط التنقل بناءً على القسم المرئي
     sections.forEach((section, index) => {
-        const sectionTop = section.offsetTop - navbar.offsetHeight; // الحصول على المسافة بين القسم وأعلى الصفحة
-        const sectionHeight = section.offsetHeight; // الحصول على ارتفاع القسم
+        const sectionTop = header.offsetTop - navbar.offsetHeight; // الحصول على المسافة بين القسم وأعلى الصفحة
+        const sectionHeight = header.offsetHeight; // الحصول على ارتفاع القسم
         
         // إذا كان القسم الحالي مرئيًا في نافذة العرض
         if (currentScrollTop >= sectionTop && currentScrollTop < sectionTop + sectionHeight) {
