@@ -136,6 +136,17 @@ display:fixed;
 
                     }
                 }
+/* إخفاء شريط التنقل */
+#navbar.hidden {
+    top: -100px; /* تحريك شريط التنقل لأعلى لإخفائه */
+    transition: top 0.3s ease;
+}
+
+/* الفئة العامة لتفعيل الروابط */
+#navbar ul li a.section-active {
+    color: #ff305b; /* يمكنك تغيير اللون إلى ما يناسبك */
+}
+
 
 
 .landpage{
