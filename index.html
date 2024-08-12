@@ -365,29 +365,45 @@
 <!----------------------------------------------------->
 
 <script> 
-    let lastScrollTop = 0;
-const navbar = document.getElementById("navbar");
-const navLinks = navbar.querySelectorAll("a");
+
+let lastScrollTop = 0; // متغير لتخزين آخر موقع للتمرير
 
 window.onscroll = function() {
-    const scrollTop = window.pageYOffset;
+    const navbar = document.getElementById("navbar"); // الحصول على شريط التنقل
+    const sections = document.querySelectorAll(".section"); // الحصول على جميع الأقسام
+    const navLinks = navbar.querySelectorAll("a"); // الحصول على جميع الروابط في شريط التنقل
+    
+    let currentScrollTop = window.pageYOffset; // الحصول على الموقع الحالي للتمرير
 
-    // إظهار/إخفاء شريط التنقل بناءً على اتجاه التمرير
-    navbar.classList.toggle("hidden", scrollTop > lastScrollTop);
+    // إظهار أو إخفاء شريط التنقل بناءً على اتجاه التمرير
+    if (currentScrollTop > lastScrollTop) {
+        // إذا كان التمرير لأسفل، نخفي شريط التنقل
+        navbar.classList.add("hidden");
+    } else {
+        // إذا كان التمرير لأعلى، نظهر شريط التنقل
+        navbar.classList.remove("hidden");
+    }
+
+    lastScrollTop = currentScrollTop; // تحديث الموقع الأخير للتمرير
 
     // تغيير خلفية شريط التنقل عند التمرير
-    navbar.style.backgroundColor = scrollTop > 0 ? "#fff" : "transparent";
+    if (currentScrollTop > 0) {
+        navbar.style.backgroundColor = "#fff"; // تغيير الخلفية إلى اللون الأبيض عند التمرير
+    } else {
+        navbar.style.backgroundColor = "transparent"; // إعادة الخلفية إلى الشفافية عند العودة لأعلى الصفحة
+    }
 
-    // تمييز الرابط النشط بناءً على القسم المرئي
-    document.querySelectorAll(".section").forEach((section, i) => {
-        const sectionTop = section.offsetTop - navbar.offsetHeight;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        const isActive = scrollTop >= sectionTop && scrollTop < sectionBottom;
-        navLinks[i].classList.toggle("active", isActive);
-        navLinks[i].classList.toggle("section-active", isActive);
+    // تمييز الرابط النشط في شريط التنقل بناءً على القسم المرئي
+    sections.forEach((section, index) => {
+        const sectionTop = section.offsetTop - navbar.offsetHeight; // الحصول على المسافة بين القسم وأعلى الصفحة
+        const sectionHeight = section.offsetHeight; // الحصول على ارتفاع القسم
+        
+        // إذا كان القسم الحالي مرئيًا في نافذة العرض
+        if (currentScrollTop >= sectionTop && currentScrollTop < sectionTop + sectionHeight) {
+            navLinks.forEach(link => link.classList.remove("active", "section-active")); // إزالة التمييز من جميع الروابط
+            navLinks[index].classList.add("active", "section-active"); // إضافة التمييز للرابط المقابل للقسم المرئي
+        }
     });
-
-    lastScrollTop = scrollTop;
 };
 
 
